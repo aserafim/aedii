@@ -51,3 +51,10 @@ bool insereAresta(int v1, int v2, TipoPeso peso, TipoGrafo *grafo){
 	return true;
 
 }
+
+bool existeAresta(int v1, int v2, TipoGrafo *grafo){
+
+
+
+	return true;
+}
