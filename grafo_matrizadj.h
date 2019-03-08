@@ -45,16 +45,29 @@ bool insereAresta(int v1, int v2, TipoPeso peso, TipoGrafo *grafo){
 	if(!v1 || !v2){
 		fprintf(stderr, "Erro! Indice de vertice invalido\n");
 		return false;
-	}else
+	}else if(v1 == v2){
+        fprintf(stderr, "Não é possível inserir loops.\n");
+        return false;
+    }else{
 	grafo -> numArestas = 1;
 	grafo -> mat[v1][v2] = peso;
 	return true;
-
+    }
 }
 
 bool existeAresta(int v1, int v2, TipoGrafo *grafo){
 
-
-
-	return true;
+    if(!grafo->numArestas){
+        fprintf(stderr,"Grafo nulo!\n");
+        return false;
+    }else if(grafo->numVertices==0 || grafo->numVertices==1){
+        fprintf(stderr, "Grafo sem arestas!\n");
+        return false;
+    }else if(grafo->mat[v1][v2]){
+        printf("Aresta encontrada! Peso=%d\n", grafo->mat[v1][v2]);
+        return true;
+    }else{
+        printf("Aresta inexistente!\n");
+        return false;
+    }
 }
