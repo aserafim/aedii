@@ -1,0 +1,15 @@
+void listaAdjVazia(TipoGrafo *grafo){
+
+    int i, j, counter;
+
+    for(i = 0; i < grafo->numVertices; i++){
+
+        for(j = 0; j < grafo->numVertices; j++){
+
+            if(grafo->mat[i][j]) counter++;
+        }
+    }
+
+    if(counter) return false;
+    else return true;
+}

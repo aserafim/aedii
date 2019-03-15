@@ -2,8 +2,7 @@
 #define AN -1 /* int used to represent the  */
 #define VERTICE_INVALIDO -1 /* invalid node number */
 #include<stdio.h>
-#include <stdbool.h>
-/* Its a default library used to handle boolean variables */
+#include <stdbool.h> /* Its a default library used to handle boolean variables */
 
 FILE *stderr;
 
@@ -116,10 +115,12 @@ bool removeAresta(int v1, int v2, TipoGrafo *grafo){
 
 }
 
-//Function responsible for ve
+
+//Function responsible for verify the adjacency
 bool listaAdjVazia(TipoGrafo *grafo){
 
     int counter, i, j;
+    counter = 0; //OBS: Sempre incialize as variaveis
 
     for(i = 0; i < grafo->numVertices; i++){
 
@@ -128,20 +129,21 @@ bool listaAdjVazia(TipoGrafo *grafo){
             if (grafo->mat[i][j] != 0) counter++;
         }
     }
-
-    if (counter) return false;
-    else return true;
+    if (counter != 0){
+	    return false;
+    } else return true;
 
 }
+
 
 //Print the adjacency matrix
 void imprimeMatriz(TipoGrafo *grafo){
 
     int i, j;
 
-    for(i = 0; i < grafo->numVertices; i++){
+    for(i = 0; i <= grafo->numVertices; i++){
 
-        for(j = 0; j < grafo->numVertices; j++){
+        for(j = 0; j <= grafo->numVertices; j++){
 
             printf("%d\t", grafo->mat[i][j]);
         }
@@ -150,3 +152,28 @@ void imprimeMatriz(TipoGrafo *grafo){
     }
 
 }
+
+//Return the first element of the adjacency list
+TipoApontador primeiroListaAdj(int v, TipoGrafo *grafo){
+	
+	int i;
+
+	for(i = 0; i < grafo->numVertices; i++){
+	
+		if (grafo->mat[v][i] != 0) return i;
+	}
+	if (i > grafo->numVertices) return -1;
+}
+
+//Return the next element of the adjacency list
+TipoApontador proxListaAdj(int v, TipoGrafo *grafo, TipoApontador atual){
+	
+	int i;
+
+	for(i = atual + 1; i < grafo->numVertices; i++){
+	
+		if (grafo->mat[v][i] != 0) return i;
+	}
+	if (i > grafo->numVertices) return -1;
+}
+
