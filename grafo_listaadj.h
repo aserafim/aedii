@@ -14,19 +14,65 @@ typedef struct taresta{
 	struct taresta *prox;
 }TipoAresta;
 
+//TipoApontador é um ponteiro para TipoAresta
 typedef TipoAresta* TipoApontador;
 
-typedef struct {
+typedef struct{
 	TipoApontador *listaAdj;
 	int numVertices;
 	int numArestas;
-} TipoGrafo;
+//	TipoApontador * adj[MAXNUMVERTICES + 1];
+}TipoGrafo;
 
 //Initializing a Graph
 bool inicializaGrafo(TipoGrafo * grafo, int nv){
+	
+	int i;
 
 	grafo -> numVertices = nv;
-	grafo->numArestas=0;	
-	grafo -> listaAdj = NULL;
-	return true;
+	grafo -> numArestas = 0;
+	//Observe que a alocacao de memoria
+	//cria automaticamente um vetor
+	//de dimensao nv
+	grafo -> listaAdj = malloc (nv * sizeof(TipoApontador));
+	
+	//O vetor alocado pode ser acessado a partir 
+	//de um for
+	//Sao criados nv + 1 vertices
+	//e os vertices do grafo sao contados
+	//a partir do vertice de indice 1
+	for (i = 0; i <= nv; i++){
+
+		grafo -> listaAdj[i] = NULL;
+
+	}
+
+
+	return true;	
+
+}
+
+//Verifica a existencia de uma aresta
+bool existeAresta(int v1, int v2, TipoGrafo *grafo){
+
+	for (int i = 0; i < grafo -> numVertices; i++){
+
+		if (grafo -> listaAdj[v1] -> vdest == v2) return true;
+		else return false;
+	}
+}
+
+//Insere aresta no vetor
+void insereAresta(int v1, int v2, TipoPeso peso, TipoGrafo *grafo){
+
+	
+	if (existeAresta(v1, v2, grafo)) printf("Esta aresta ja existe\n");
+	else{
+	
+		grafo -> listaAdj[v1] -> prox = grafo -> listaAdj[v2];
+
+
+	}
+
+
 }
