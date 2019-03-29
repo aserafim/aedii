@@ -21,7 +21,6 @@ typedef struct{
 	TipoApontador *listaAdj;
 	int numVertices;
 	int numArestas;
-//	TipoApontador * adj[MAXNUMVERTICES + 1];
 }TipoGrafo;
 
 //Initializing a Graph
@@ -41,18 +40,20 @@ bool inicializaGrafo(TipoGrafo * grafo, int nv){
 	//Sao criados nv + 1 vertices
 	//e os vertices do grafo sao contados
 	//a partir do vertice de indice 1
+        
+        //Observe que mesmo apos a alocacao do vetor
+        //e necessario inicializar cada um dos ponteiros
+        //uma vez que apos a alocacao, o espaco de memoria
+        //esta reservado, porem nao possui valor
 	for (i = 0; i <= nv; i++){
 
-		grafo -> listaAdj[i] = NULL;
+		grafo -> listaAdj[i] = malloc (sizeof(TipoApontador));
 
-	}
-
-
-	return true;	
-
+	}	
 }
 
 //Verifica a existencia de uma aresta
+
 bool existeAresta(int v1, int v2, TipoGrafo *grafo){
 
 	for (int i = 0; i < grafo -> numVertices; i++){
@@ -68,11 +69,12 @@ void insereAresta(int v1, int v2, TipoPeso peso, TipoGrafo *grafo){
 	
 	if (existeAresta(v1, v2, grafo)) printf("Esta aresta ja existe\n");
 	else{
-	
 		grafo -> listaAdj[v1] -> prox = grafo -> listaAdj[v2];
-
-
+		grafo -> listaAdj[v1] -> peso = peso;
+		grafo -> listaAdj[v1] -> vdest = v2;
+		grafo -> numArestas++;
 	}
+	
 
 
 }
