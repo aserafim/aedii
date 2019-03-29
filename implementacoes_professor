@@ -1,0 +1,63 @@
+#inicializa
+
+grafo -> listaAdj = (tipoApontador*) malloc(nv*sizeof(TipoGrafo));
+
+for (i=0; i<nv; i++) grafo -> listaAdj[i] = NULL;
+
+
+
+##existeAresta
+
+bool existeAresta(int v1, int v2, TipoGrafo *grafo){
+
+	TipoApontador aux = grafo -> listaAdj[v1];
+	while(aux != null){
+	
+		if(aux -> vdest == v2) return true;
+		aux = aux -> prox;
+	}
+	
+	return false;
+}
+
+
+##Insere aresta
+
+void InsereAresta(int v1, int v2, int peso, TipoGrafo *grafo){
+
+	TipoApontador novo, atual;
+	
+	atual = grafo -> listaAdj[v1];
+	novo = (tipoApontador*) malloc(sizeof(TipoAresta));
+	
+	novo -> peso = peso;
+	novo -> vdest = v2;
+	grafo -> listaAdj[v1] = novo;
+	grafo -> numArestas++;
+}
+
+
+##RemoveAresta
+
+#Primeiro utilize existeAresta para verificar a existência da aresta removida
+
+bool RemoveAresta(int v1, int v2, TipoGrafo *grafo){
+
+	TipoApontador ant atual;
+	
+	if (grafo -> listaAdj[v1] -> vdest == v2){
+	
+		*peso = grafo -> listaAdj[v1] -> peso;
+		grafo -> listaAdj[v1] = grafo -> listaAdj[v1] -> prox;
+	}
+	
+	ant = grafo -> listaAdj[v1];
+	aux = ant -> prox;
+	
+	while(aux != null){
+		if(aux -> vdest = v2){
+			*peso = aux -> peso;
+			ant -> prox = aux -> prox;
+			vdest = aux;
+			return true;
+		}
