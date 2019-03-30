@@ -10,17 +10,18 @@
 #define MAXARQ 350 			//tamanho maximo de entradas para o vetor que armazena o grafo
 
 //VARIAVEIS GLOBAIS
-FILE *grafo;				//ponteiro para o arquivo grafo a ser lido
+FILE *grafo, *saida;			//ponteiro para o arquivo grafo a ser lido e para a saida
 int vetorGrafo[MAXARQ];
 int ch1 = 0, ch2 =0 , ch3 = 0;		//variavel de apoio para leitura dos caracteres do arquivo grafo
 
 //Funcao principal
-int main(){
+int main(int argc, char *argv[]){
 	
 	int i = 2, j = 0;		//variaveis de iteracao
 
+
 	//Lendo o arquivo e armazendo no vetor
-	grafo = fopen("grafo01.txt", "r");
+	grafo = fopen(argv[1], "r");
 	fscanf(grafo, "%d %d", &ch1, &ch2);
 	vetorGrafo[0] = ch1;
 	vetorGrafo[1] = ch2;
@@ -36,13 +37,17 @@ int main(){
 	}
 
 	fclose(grafo);
+	
+	//Abrindo arquivo de saida
+	saida = fopen(argv[2], "a");
 
-	//testando leitura do arquivo grafo APAGAR
-	/*
+	//Testando entrada e saida - APAGAR!!!
 	while(j != i){
 
-		printf("%d\n", vetorGrafo[j]);
+		fprintf(saida, "%d\n",vetorGrafo[j]);
 		j++;
-	}*/
+	}
+	fclose(saida);
+
 	return 0;
 }
