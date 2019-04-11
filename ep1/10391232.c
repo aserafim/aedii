@@ -16,6 +16,7 @@
 
 //VARIAVEIS GLOBAIS
 FILE *grafo, *saida;				//ponteiro para o arquivo grafo a ser lido e para a saida
+int custo[MAXARQ], ant[MAXARQ];
 int vetorGrafo[MAXARQ], vetorArvore[MAXARQ];	//vetores do grafo e da arvore final
 int ch1 = 0, ch2 =0 , ch3 = 0;			//variavel de apoio para leitura dos caracteres do arquivo grafo
 int tamanhoVetor;
@@ -27,15 +28,18 @@ typedef struct{
 	int numArestas;
 }TipoGrafo;
 
+
 //Funcao para inicialiar o grafo
 bool inicializaGrafo(TipoGrafo * grafo){
 	int i,j;
-	grafo -> numVertices = vetorGrafo[0];
-	grafo -> numArestas = vetorGrafo[1];
+	int nv = vetorGrafo[0], na = vetorGrafo[1];
+	grafo -> numVertices = nv;
+	grafo -> numArestas = na;
 	for (i = 0; i < grafo -> numVertices; i++){
 		for(j = 0; j < grafo -> numVertices ; j++) grafo -> mat[i][j] = 0;
 	}
 }
+
 
 //Funcao para imprimir a matriz de adjacencia
 void imprimeMatriz(TipoGrafo *grafo){
@@ -48,6 +52,7 @@ void imprimeMatriz(TipoGrafo *grafo){
     }
 }
 
+
 //Funcao para inserir as arestas
 bool insereAresta(TipoGrafo *grafo){
 	int i = 2;
@@ -57,6 +62,7 @@ bool insereAresta(TipoGrafo *grafo){
 		int peso = vetorGrafo[i + 2];
 		i = i + 3;
 		grafo -> mat[v1][v2] = peso;
+		grafo -> mat[v2][v1] = peso;
 	}
 	return true;
 }
@@ -64,9 +70,11 @@ bool insereAresta(TipoGrafo *grafo){
 //Funcao principal
 int main(int argc, char *argv[]){
 	
-	int i = 2, j = 0;			//variaveis de iteracao
-	TipoGrafo grafoIni;			//grafo inicial
+	int i = 2, j = 0;					//variaveis de iteracao
+	TipoGrafo grafoIni, arvoreGeradora;			//grafo inicial
 
+	grafo = fopen(argv[1], "r");
+	
 	//Lendo o arquivo e armazendo no vetor
 	grafo = fopen(argv[1], "r");
 	fscanf(grafo, "%d %d", &ch1, &ch2);
@@ -84,13 +92,46 @@ int main(int argc, char *argv[]){
 	}
 	
 	//Seta o tamanho do vetorGrafo e fecha o arquivo
-	tamanhoVetor = i - 1;
+	//tamanhoVetor = i - 1;
+	tamanhoVetor = i;
 	fclose(grafo);
 	
+		
 	//Testando funcoes da struct
 	inicializaGrafo(&grafoIni);
 	insereAresta(&grafoIni);
 	imprimeMatriz(&grafoIni);
+
+	//-----------------------------------------------//	
+	//Testando PRIM
+
+	//Setando ant e custo
+	for(i = 0; i < grafoIni.numVertices; i++){
+		custo[i] = 10000;
+		ant[i] = -1;
+	}
+	custo[0] = 0;
+	
+	printf("%d\n", grafoIni.numVertices);
+		
+	//Laco que implementa PRIM
+	for(i = 0; i < grafoIni.numVertices; i++){
+		for(j = 0; j < grafoIni.numVertices; j++){
+			if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[j]){
+				ant[j] = i;
+				custo[j] = grafoIni.mat[i][j];
+			}
+		}
+	}
+
+	//Imprimindo vetor de custo para testar
+	printf("\n");
+	for(i = 0; i < grafoIni.numVertices; i++){
+		printf("%d\t", custo[i]);
+	}
+	printf("\n");
+
+	//----------------------------------------------//
 
 	//Abrindo arquivo de saida
 	saida = fopen(argv[2], "wr");
