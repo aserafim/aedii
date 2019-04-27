@@ -127,20 +127,20 @@ int main(int argc, char *argv[]){
 
 		}
 	}*/
-
+	int soma;
 	//Laco que implementa PRIM
 	for(i = 0; i < grafoIni.numVertices; i++){
-		for(j = i; j < grafoIni.numVertices; j++){
+		for(j = 0; j < grafoIni.numVertices; j++){
 			if (s[i] == 1){
-				if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[i]){
+				if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[j]){
 					ant[j] = i;
-					custo[i] = grafoIni.mat[i][j];
+					custo[j] = grafoIni.mat[i][j];
 					AGM.mat[i][j] = grafoIni.mat[i][j];
 				}
 			}else {
 				if(grafoIni.mat[i][j] > 0){
 					ant[j] = i;
-					custo[i] = grafoIni.mat[i][j];
+					custo[j] = grafoIni.mat[i][j];
 					AGM.mat[i][j] = grafoIni.mat[i][j];
 					s[i]=1;
 				}
@@ -152,6 +152,8 @@ int main(int argc, char *argv[]){
 //		for(k = 0; k < grafoIni.numVertices; k++) printf("%d\t", custo[k]);
 //		printf("\n");
 	}
+
+
 	
 	//Testando impreessão da arvore
 	saida = fopen(argv[2], "wr");
@@ -170,6 +172,8 @@ int main(int argc, char *argv[]){
 	for(i = 0; i < grafoIni.numVertices; i++){
 		printf("%d\t", custo[i]);
 	}*/
+	printf("%d", soma);
+	
 	printf("\n\n\n");
 	
 	imprimeMatriz(&AGM);
