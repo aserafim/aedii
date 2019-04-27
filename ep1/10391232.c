@@ -122,9 +122,25 @@ int main(int argc, char *argv[]){
 				custo[j] = grafoIni.mat[i][j];
 			}
 		}
-	}
 
-	//Imprimindo vetor de custo para testar
+
+//		int k = 0;
+//		for(k = 0; k < grafoIni.numVertices; k++) printf("%d\t", custo[k]);
+//		printf("\n");
+	}
+	
+	//Testando impreessão da arvore
+	saida = fopen(argv[2], "wr");
+	fprintf(saida, "%d ", grafoIni.numVertices);
+	fprintf(saida, "%d\n", grafoIni.numVertices - 1);
+
+	fclose(saida);
+
+	//Imprimindo vetor de custo e ant para testar
+	printf("\n");
+	for(i = 0; i < grafoIni.numVertices; i++){
+		printf("%d\t", ant[i]);
+	}
 	printf("\n");
 	for(i = 0; i < grafoIni.numVertices; i++){
 		printf("%d\t", custo[i]);
@@ -132,7 +148,7 @@ int main(int argc, char *argv[]){
 	printf("\n");
 
 	//----------------------------------------------//
-
+	/*
 	//Abrindo arquivo de saida
 	saida = fopen(argv[2], "wr");
 	
@@ -143,6 +159,6 @@ int main(int argc, char *argv[]){
 		j++;
 	}
 	fclose(saida);
-
+	*/
 	return 0;
 }
