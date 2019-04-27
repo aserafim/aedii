@@ -106,6 +106,11 @@ int main(int argc, char *argv[]){
 	//-----------------------------------------------//	
 	//Testando PRIM
 
+	//Declarando vetor S para controle dos vertices inseridos
+	//na AGM
+	int qtdVert = vetorGrafo[0];
+	int s[qtdVert];
+
 	//Setando ant e custo
 	for(i = 0; i < grafoIni.numVertices; i++){
 		custo[i] = 10000;
@@ -114,14 +119,31 @@ int main(int argc, char *argv[]){
 	custo[0] = 0;
 	
 	printf("%d\n", grafoIni.numVertices);
-		
+
+	/*for( i = 0; i < qtdVert ; i++)
+	{
+		//vertice selecionado
+		if(s[i]== 0){
+
+		}
+	}*/
+
 	//Laco que implementa PRIM
 	for(i = 0; i < grafoIni.numVertices; i++){
-		for(j = 0; j < grafoIni.numVertices; j++){
-			if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[j]){
-				ant[j] = i;
-				custo[j] = grafoIni.mat[i][j];
-				AGM.mat[i][j] = grafoIni.mat[i][j];
+		for(j = i; j < grafoIni.numVertices; j++){
+			if (s[i] == 1){
+				if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[i]){
+					ant[j] = i;
+					custo[i] = grafoIni.mat[i][j];
+					AGM.mat[i][j] = grafoIni.mat[i][j];
+				}
+			}else {
+				if(grafoIni.mat[i][j] > 0){
+					ant[j] = i;
+					custo[i] = grafoIni.mat[i][j];
+					AGM.mat[i][j] = grafoIni.mat[i][j];
+					s[i]=1;
+				}
 			}
 		}
 
