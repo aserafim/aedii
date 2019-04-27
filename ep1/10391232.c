@@ -71,7 +71,7 @@ bool insereAresta(TipoGrafo *grafo){
 int main(int argc, char *argv[]){
 	
 	int i = 2, j = 0;					//variaveis de iteracao
-	TipoGrafo grafoIni, arvoreGeradora;			//grafo inicial
+	TipoGrafo grafoIni, AGM;			//grafo inicial
 
 	grafo = fopen(argv[1], "r");
 	
@@ -98,6 +98,7 @@ int main(int argc, char *argv[]){
 	
 		
 	//Testando funcoes da struct
+	inicializaGrafo(&AGM);
 	inicializaGrafo(&grafoIni);
 	insereAresta(&grafoIni);
 	imprimeMatriz(&grafoIni);
@@ -120,6 +121,7 @@ int main(int argc, char *argv[]){
 			if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[j]){
 				ant[j] = i;
 				custo[j] = grafoIni.mat[i][j];
+				AGM.mat[i][j] = grafoIni.mat[i][j];
 			}
 		}
 
@@ -135,7 +137,8 @@ int main(int argc, char *argv[]){
 	fprintf(saida, "%d\n", grafoIni.numVertices - 1);
 
 	fclose(saida);
-
+	
+	/*
 	//Imprimindo vetor de custo e ant para testar
 	printf("\n");
 	for(i = 0; i < grafoIni.numVertices; i++){
@@ -144,9 +147,10 @@ int main(int argc, char *argv[]){
 	printf("\n");
 	for(i = 0; i < grafoIni.numVertices; i++){
 		printf("%d\t", custo[i]);
-	}
-	printf("\n");
-
+	}*/
+	printf("\n\n\n");
+	
+	imprimeMatriz(&AGM);
 	//----------------------------------------------//
 	/*
 	//Abrindo arquivo de saida
