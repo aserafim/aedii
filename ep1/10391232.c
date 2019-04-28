@@ -110,11 +110,13 @@ int main(int argc, char *argv[]){
 	//na AGM
 	int qtdVert = vetorGrafo[0];
 	int s[qtdVert];
+	int menor = 10000;
 
 	//Setando ant e custo
 	for(i = 0; i < grafoIni.numVertices; i++){
 		custo[i] = 10000;
 		ant[i] = -1;
+		s[i] = 0;
 	}
 	custo[0] = 0;
 	
@@ -127,30 +129,50 @@ int main(int argc, char *argv[]){
 
 		}
 	}*/
-	int soma;
+	s[0]=1; 
 	//Laco que implementa PRIM
 	for(i = 0; i < grafoIni.numVertices; i++){
 		for(j = 0; j < grafoIni.numVertices; j++){
 			if (s[i] == 1){
 				if(grafoIni.mat[i][j] > 0 && grafoIni.mat[i][j] <= custo[j]){
+					//menor = custo[j];
 					ant[j] = i;
+					//printf("ant[%d]=%d", j, i);
 					custo[j] = grafoIni.mat[i][j];
+					//printf("\tcusto[%d]=%d\n", j, grafoIni.mat[i][j]);
 					AGM.mat[i][j] = grafoIni.mat[i][j];
 				}
 			}else {
 				if(grafoIni.mat[i][j] > 0){
+					//menor = custo[j];
 					ant[j] = i;
+					//printf("ant[%d]=%d", j, i);
 					custo[j] = grafoIni.mat[i][j];
+					//printf("\tcusto[%d]=%d\n", j, grafoIni.mat[i][j]);
 					AGM.mat[i][j] = grafoIni.mat[i][j];
-					s[i]=1;
+					//s[i]=1;
 				}
 			}
 		}
+		int indice;
 
+		for(int k = 0; k < grafoIni.numVertices; k++)
+		{
+			if(s[k]== 0 && custo[k] <= menor){
+				menor = custo[k];
+				indice = k;
+			}
+		}
 
-//		int k = 0;
-//		for(k = 0; k < grafoIni.numVertices; k++) printf("%d\t", custo[k]);
-//		printf("\n");
+		
+
+		s[indice] = 1;
+		printf("Aresta: (%d , %d)\t menor=%d \t\n", ant[indice], indice,menor);
+		menor = 10000;
+		printf("Custo: \t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n", custo[0],custo[1],custo[2],custo[3],custo[4],custo[5],custo[6]);
+		printf("Ant : \t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",ant[0],ant[1],ant[2],ant[3],ant[4],ant[5],ant[6]);
+		printf("S: \t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n", s[0],s[1],s[2],s[3],s[4],s[5],s[6]);
+		printf("\n\n");
 	}
 
 
@@ -172,7 +194,7 @@ int main(int argc, char *argv[]){
 	for(i = 0; i < grafoIni.numVertices; i++){
 		printf("%d\t", custo[i]);
 	}*/
-	printf("%d", soma);
+	//printf("%d", soma);
 	
 	printf("\n\n\n");
 	
