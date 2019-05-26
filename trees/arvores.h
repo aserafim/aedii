@@ -32,6 +32,8 @@ int BTreeSearch(node *root, Key k){
 	int i = 0;
 	while(i < (2*t-1) && k > root -> keys[i]) i++;
 	if ((i < (2*t-1)) && (k == root -> keys[i])) return i;
+	else if(i < (2*t-1) && k <= root -> keys[i]) return BTreeSearch(root -> sons[i], k);
+	//else BTreeSearch(root -> sons[i - 1]);
 	else return -1;
 }
 
